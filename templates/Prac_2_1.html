@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sum Comparison Result</title>
+    <style>
+        h1{
+            margin-left: 20px;
+        }
+        table {
+            margin-left: 20px;
+            width: 80%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Sum Comparison Result</h1>
+    <img src="data:image/png;base64,{{ plot_url }}" alt="Sum Comparison Plot">
+    
+    <h1>Counts Table</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Number</th>
+                <th>Count (Iteration)</th>
+                <th>Count (Equation)</th>
+                <th>Count (Recursion)</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in range(numbers|length) %}
+            <tr>
+                <td>{{ numbers[i] }}</td>
+                <td>{{ count_loops[i] }}</td>
+                <td>{{ count_equations[i] }}</td>
+                <td>{{ count_recursions[i] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+
+</html>

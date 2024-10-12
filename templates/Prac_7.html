@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knapsack Solution</title>
+    <style>
+        table {
+            width: 50%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+            text-align: center;
+        }
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2 class="center">Knapsack Solution Table</h2>
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                {% for w in range(W + 1) %}
+                    <th>W = {{ w }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in range(n + 1) %}
+            <tr>
+                <td>i = {{ i }}</td>
+                {% for w in range(W + 1) %}
+                    <td>{{ K[i][w] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3 class="center">Maximum Value: {{ max_value }}</h3>
+    
+    <h3 class="center">Selected Artefacts (by index):</h3>
+    <p class="center">{{ selected_items }}</p>
+</body>
+</html>

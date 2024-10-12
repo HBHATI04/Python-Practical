@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Time Comparison</title>
+</head>
+<body>
+    <h1>Search Time Comparison</h1>
+    <img src="data:image/png;base64,{{ plot_url }}" alt="Search Time Comparison Graph">
+
+    <h2>Search Results</h2>
+    <p><strong>Highest Salary:</strong> {{ highest_salary_employee.designation }} - Rs.{{ highest_salary_employee.salary }} ({{ highest_salary_employee.name }})</p>
+    <p><strong>Lowest Salary:</strong> {{ lowest_salary_employee.name }} - Rs.{{ lowest_salary_employee.salary }}</p>
+    <p><strong>Youngest Employee:</strong> {{ youngest_employee.name }} - Age {{ youngest_employee.age }}, Mobile: {{ youngest_employee.mobile }}</p>
+    <p><strong>Oldest Employee:</strong> {{ oldest_employee.name }} - Age {{ oldest_employee.age }}, Salary: Rs.{{ oldest_employee.salary }}</p>
+</body>
+</html>

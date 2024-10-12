@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Change Problem</title>
+</head>
+<body>
+    <h1>Coin Change Problem</h1>
+    <form method="POST">
+        <label for="coins">Enter coin denominations (comma-separated):</label><br>
+        <input type="text" id="coins" name="coins" placeholder="e.g., 1,4,6" required><br><br>
+        <label for="amount">Enter amount:</label><br>
+        <input type="number" id="amount" name="amount" required><br><br>
+        <input type="submit" value="Calculate">
+    </form>
+    {% if result is not none %}
+        <h2>Minimum coins required: {{ result }}</h2>
+        <h3>Coins used:</h3>
+        <ul>
+            {% for coin, count in coins_used.items() %}
+                <li>{{ coin }} coin is used {{ count }} time{{ 's' if count > 1 else '' }}</li>
+            {% endfor %}
+        </ul>
+        <h3>Time taken: {{ execution_time }} seconds</h3>
+    {% endif %}
+</body>
+</html>

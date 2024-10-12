@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rabbit Population Growth</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .chart-container {
+            width: 600px;
+            margin-bottom: 20px;
+        }
+        .data-container {
+            width: 300px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #999;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rabbit Population Growth</h1>
+    <div class="container">
+        <div class="chart-container">
+            <h2>Comparative Analysis of Iterative vs Recursive Methods</h2>
+            <img src="data:image/png;base64,{{ plot_url }}" alt="Comparative Analysis">
+        </div>
+        <div class="data-container">
+            <h2>Data Table</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Rabbit Pairs</th>
+                        <th>Iterative Steps</th>
+                        <th>Recursive Steps</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in range(months|length) %}
+                    <tr>
+                        <td>{{ months[i] }}</td>
+                        <td>{{ rabbit_pairs[i] }}</td>
+                        <td>{{ iterative_steps[i] }}</td>
+                        <td>{{ recursive_steps[i] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
