@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSP Solver</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            color: #2c3e50;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .form-container,
+        .result-container {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 0 10px;
+            flex: 1;
+            min-width: 300px;
+            max-width: 48%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input[type="number"],
+        input[type="text"] {
+            width: 60px;
+            padding: 5px;
+            margin-right: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="number"]:focus,
+        input[type="text"]:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .submit-button {
+            background-color: #e67e22;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        .submit-button:hover {
+            background-color: #d35400;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            background-color: #ffffff;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #d1e7fd;
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .city-names,
+        .distance-inputs {
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+
+        .distance-input-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .distance-input-row label {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Travelling Salesman Problem Solver</h1>
+    <div class="container">
+        <div class="form-container">
+            <form id="nodes-form" method="post">
+                <div style="display: flex; align-items: center;"> <label for="nodes" style="margin-right: 10px;">Enter
+                        the number of cities:</label> <input type="number" id="nodes" name="nodes" min="2" required>
+                    <button type="button" onclick="generateMatrixInputs()">Generate Distance Matrix</button>
+                </div>
+            </form>
+            <form id="matrix-form" method="post" style="display: none;">
+                <div id="graphContainer"></div> <input type="hidden" id="nodes-hidden" name="nodes" value=""> <input
+                    type="submit" value="Submit" class="submit-button">
+            </form>
+        </div>
+        <div class="result-container"> {% if output %} <h2>Input Distance Matrix</h2>
+            <table>
+                <tr>
+                    <th>From/To</th> {% for j in range(output.input_matrix|length) %} <th>City {{ j + 1 }}</th> {%
+                    endfor %}
+                </tr> {% for i in range(output.input_matrix|length) %} <tr>
+                    <th>City {{ i + 1 }}</th> {% for j in range(output.input_matrix[i]|length) %} <td>{{
+                        output.input_matrix[i][j] }}</td> {% endfor %}
+                </tr> {% endfor %}
+            </table>
+            <h2>Minimum Path Results</h2>
+            <p>Path Taken: {{ output.path }}</p>
+            <p>Minimum cost: {{ output.cost }}</p>
+            <h3>Path Details:</h3>
+            <table style="width: 50%; margin: auto;">
+                <tr>
+                    <th>Segment</th>
+                    <th>Cost</th>
+                </tr> {% for segment in output.segments.split(', ') %} <tr>
+                    <td>{{ segment.split(' = ')[0] }}</td>
+                    <td>{{ segment.split(' = ')[1] }}</td>
+                </tr> {% endfor %}
+            </table> {% endif %}
+        </div>
+    </div>
+    <script> function generateMatrixInputs() {
+            const nodes = document.getElementById('nodes').value; document.getElementById('nodes-hidden').value = nodes; const graphContainer = document.getElementById('graphContainer'); graphContainer.innerHTML = ''; // Clear previous inputs 
+            for (let i = 0; i < nodes; i++) { graphContainer.innerHTML += `<h4>Distances from City ${i + 1}</h4>`; const rowDiv = document.createElement('div'); rowDiv.classList.add('distance-input-row'); for (let j = 0; j < nodes; j++) { const label = document.createElement('label'); label.setAttribute('for', `weight_${i}_${j}`); label.textContent = `To City ${j + 1}:`; const input = document.createElement('input'); input.type = 'text'; input.id = `weight_${i}_${j}`; input.name = `weight_${i}_${j}`; input.defaultValue = '∞'; rowDiv.appendChild(label); rowDiv.appendChild(input); } graphContainer.appendChild(rowDiv); } document.getElementById('matrix-form').style.display = 'block';
+        }
+    </script>
+</body>
+
+</html>
