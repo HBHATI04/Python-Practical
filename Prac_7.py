@@ -42,4 +42,4 @@ def knapsack_solution():
     return render_template('Prac_7.html', K=K, W=W, n=n, max_value=max_value, selected_items=selected_items)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8080)
