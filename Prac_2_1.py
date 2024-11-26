@@ -6,11 +6,11 @@ import sys
 
 app = Flask(__name__)
 
-sys.setrecursionlimit(100000)
+sys.setrecursionlimit(1000)
 
 @app.route('/')
 def index():
-    lst = [10, 100, 1000, 5000, 10000, 50000]
+    lst = [10, 50, 100, 250, 400, 450]
     sum1 = 0
     sum2 = 0
     sum3 = 0
