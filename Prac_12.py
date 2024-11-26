@@ -63,4 +63,4 @@ def index():
     return render_template('Prac_12.html', output=None)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=20000)
