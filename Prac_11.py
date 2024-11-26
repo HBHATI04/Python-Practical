@@ -64,4 +64,4 @@ def index():
     return render_template("Prac_11.html", result=result, nodes=nodes, start_city=start_city, graph=graph)
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, port=15000)
