@@ -44,4 +44,4 @@ def coin_change():
     
     return render_template('Prac_5.html', result=result, coins_used=coins_used, execution_time=execution_time)
 
-app.run(debug=True)
+app.run(debug=True, port=7000)
